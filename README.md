@@ -32,6 +32,8 @@ sudo nmcli connection up "Wired connection 1"
 ## 3. Validation & Testing
 ### IP Verification
 `ip a` shows 10.0.0.2/24 on eth0
+![Success Fix](success-fix.png)
+Shows: nmcli modify with ipv4.dad-timeout 0 (off), Connection successfully activated, ip a shows 10.0.0.2/24 on eth0, ping 8.8.8.8 success
 
 
 ### Gateway Verification
@@ -52,9 +54,14 @@ sudo nmcli connection up "Wired connection 1"
 **Solution:** Set `ipv4.dad-timeout 0` to disable DAD:
 `sudo nmcli con mod "Wired connection 1" ipv4.dad-timeout 0`
 Verified with `nmcli -f ipv4.dad-timeout con show "Wired connection 1"` showing 0
+![Error Example](troubleshooting.png)
+Common mistake: using "con down" with IP parameters causes "is not an active connection" error - correct way is "con mod"
 
 ## 5. Snapshot
 Took VirtualBox snapshot named "Network Fixed 10.0.0.2" after successful fix to preserve working state.
+![Snapshot](snapshot.png)
+VirtualBox snapshot "kali Linux setup" preserved
+
 
 
 ## Key Takeaways
